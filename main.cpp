@@ -13,17 +13,21 @@ using namespace std;
 #include <unordered_map>
 #include <sstream>
 
+
+std::unordered_map<char, char> pairs
+{
+    {'(', ')'},
+    {'{', '}'},
+    {'[', ']'}
+};
+
 bool is_pair(char left_parenthes, char right_parenthes)
 {
-    std::unordered_map<char, char> pairs
-    {
-        {'(', ')'},
-        {'{', '}'},
-        {'[', ']'}
-    };
 
     // if map has this key and map[key].second == right_parenthes   ===> return true else return false
-    return false;
+
+    return pairs.find(left_parenthes) != pairs.end() && pairs[left_parenthes] == right_parenthes;
+
 }
 
 bool solve(const std::string  &str)
@@ -32,7 +36,7 @@ bool solve(const std::string  &str)
 
     for(char ch: str)
     {
-        if (is_pair(stack.top(), ch))
+        if (stack.size()>0 && is_pair(stack.top(), ch))
             stack.pop();
         else
             stack.push(ch);
