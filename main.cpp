@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int removeDuplicates(vector<int>& nums, const int val) {
+int removeElement(vector<int>& nums, const int val) {
     int *startpos = &nums[0]; // nums.data()
     int *v = startpos;
     int *x = startpos;
@@ -17,10 +17,10 @@ int removeDuplicates(vector<int>& nums, const int val) {
 
     while (x < endpos)
     {
-        ++x;
         if (*x != val) ++v;
-        while(*x==val) ++x;
+        ++x;
         *v = *x;
+
     }
 
     return std::distance(startpos, v);
@@ -30,7 +30,7 @@ int removeDuplicates(vector<int>& nums, const int val) {
 int main()
 {
 
-    std::vector<int> nms = {1, 1, 2, 2, 2, 3, 4, 5};
-    int res_len = removeDuplicates(nms, 2);
+    std::vector<int> nms = {1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 5, 5, 5, 5};
+    int res_len = removeElement(nms, 2);
     return 0;
 }
