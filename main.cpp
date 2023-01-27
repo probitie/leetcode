@@ -11,7 +11,7 @@ int searchInsert(vector<int>& nums, int target) {
     int * vecdata = nums.data();
     int min_index = 0;
     int max_index = nums.size();
-    int distance = max_index - min_index;
+    int distance;
 
 #define mid vecdata[middle_index]
 #define min vecdata[min_index]
@@ -30,7 +30,7 @@ int searchInsert(vector<int>& nums, int target) {
         }
         distance = max_index - min_index;
 
-        if (distance <= 1 && target == min)
+        if (distance <= 1 && target <= min)
         {
             return min_index;
         }
@@ -49,9 +49,9 @@ int main()
     //std::vector<int> nms = {};
     //std::vector<int> nms = {3};
     //std::vector<int> nms = {3, 3};
-    //std::vector<int> nms = {1, 1};
+    //std::vector<int> nms = {1};
     std::vector<int> nms = {1, 3, 5, 6};
-    int res_index = searchInsert(nms, 3);
+    int res_index = searchInsert(nms, 0);
     std::cout << res_index << "\n";
     return res_index;
 }
