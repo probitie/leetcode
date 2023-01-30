@@ -1,57 +1,61 @@
-#include <iostream>
+    #include <iostream>
 #include <vector>
 #include <iterator>
 #include <algorithm>
 #include <stack>
 #include <unordered_map>
 #include <sstream>
-using std::vector;
+using std::string, std::vector;
 
-int searchInsert(vector<int>& nums, int target) {
-    int * vecdata = nums.data();
-    int min_index = 0;
-    int max_index = nums.size();
-    int distance;
+vector<int> plusOne(vector<int>& digits) {
+    int left = 1;
 
-#define mid vecdata[middle_index]
-#define min vecdata[min_index]
-#define max vecdata[max_index]
-
-    int middle_index = (min_index + max_index)/2;
-    while(vecdata[middle_index] != target)
+    for(auto &&it = digits.rbegin(); it != digits.rend(); ++it)
     {
-        if (target > mid)
+        if (left and *it >= 9)
         {
-            min_index = middle_index;
+            *it = 0;
         }
         else
         {
-            max_index = middle_index;
+            ++(*it);
+            left = 0;
+            break;
         }
-        distance = max_index - min_index;
+    };
 
-        if (distance <= 1 && target <= min)
-        {
-            return min_index;
-        }
-        else if (distance <= 1)
-        {
-            return max_index;
-        }
-
-        middle_index = min_index + (distance/2);
+    if (left)
+    {
+        (*digits.begin()) = 0;
+        digits.insert(digits.begin(), 1);
     }
-    return middle_index;
-}
+    /*
+     left = 1
+go from right to left [..<--..]
+    pick digit
 
+    if left and digit > 9
+        digit = 0
+    else
+        ++digit
+        left = 0
+
+if last digit(first elem of the vector) more than 9 and left=1
+    digit = 0
+    push_from_left(1)
+    */
+
+    return std::forward<vector<int>>(digits);
+}
 int main()
 {
     //std::vector<int> nms = {};
     //std::vector<int> nms = {3};
     //std::vector<int> nms = {3, 3};
     //std::vector<int> nms = {1};
-    std::vector<int> nms = {1, 3, 5, 6};
-    int res_index = searchInsert(nms, 0);
-    std::cout << res_index << "\n";
-    return res_index;
+    std::vector<int> nms = {9};
+    vector<int> res = plusOne(nms);
+    std::for_each(res.begin(), res.end(), [](int wtf){std::cout << wtf;});
+    std::cout << "\n";
+    return 0;
 }
