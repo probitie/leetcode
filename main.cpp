@@ -1,61 +1,32 @@
-    #include <iostream>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <stack>
-#include <unordered_map>
-#include <sstream>
-using std::string, std::vector;
+#include <iostream>
+#include <string>
 
-vector<int> plusOne(vector<int>& digits) {
-    int left = 1;
+std::string addBinaryStrings(std::string a, std::string b) {
+    int i = a.length() - 1, j = b.length() - 1;
+    int carry = 0;
+    std::string result = "";
 
-    for(auto &&it = digits.rbegin(); it != digits.rend(); ++it)
-    {
-        if (left and *it >= 9)
-        {
-            *it = 0;
+    while (i >= 0 || j >= 0 || carry) {
+        int sum = carry;
+        if (i >= 0) {
+            sum += a[i] - '0';
+            i--;
         }
-        else
-        {
-            ++(*it);
-            left = 0;
-            break;
+        if (j >= 0) {
+            sum += b[j] - '0';
+            j--;
         }
-    };
 
-    if (left)
-    {
-        (*digits.begin()) = 0;
-        digits.insert(digits.begin(), 1);
+        result = std::to_string(sum % 2) + result;
+        carry = sum / 2;
     }
-    /*
-     left = 1
-go from right to left [..<--..]
-    pick digit
 
-    if left and digit > 9
-        digit = 0
-    else
-        ++digit
-        left = 0
-
-if last digit(first elem of the vector) more than 9 and left=1
-    digit = 0
-    push_from_left(1)
-    */
-
-    return std::forward<vector<int>>(digits);
+    return result;
 }
-int main()
-{
-    //std::vector<int> nms = {};
-    //std::vector<int> nms = {3};
-    //std::vector<int> nms = {3, 3};
-    //std::vector<int> nms = {1};
-    std::vector<int> nms = {9};
-    vector<int> res = plusOne(nms);
-    std::for_each(res.begin(), res.end(), [](int wtf){std::cout << wtf;});
-    std::cout << "\n";
+
+int main() {
+    std::string a = "1111";
+    std::string b = "1";
+    std::cout << addBinaryStrings(a, b) << std::endl;
     return 0;
 }
